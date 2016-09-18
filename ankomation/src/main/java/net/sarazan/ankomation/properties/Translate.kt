@@ -17,6 +17,8 @@ class Translate : Ankomation {
     var yFromPercent: Float? = null
     var yTo: Float? = null
     var yToPercent: Float? = null
+    var zFrom: Float? = null
+    var zTo: Float? = null
 
     override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
@@ -27,12 +29,16 @@ class Translate : Ankomation {
             xFromPercent?.let { view.translationX = it * view.measuredWidth }
             yFrom?.let { view.translationY = it }
             yFromPercent?.let { view.translationY = it * view.measuredHeight }
+            zFrom?.let { view.translationZ = it }
             
             val x1 = xTo ?: (xToPercent?.times(view.measuredWidth))
             val propX = x1?.let { PropertyValuesHolder.ofFloat("translationX", it) }
             val y1 = yTo ?: (yToPercent?.times(view.measuredHeight))
             val propY = y1?.let { PropertyValuesHolder.ofFloat("translationY", it) }
-            val props = arrayOf(propX, propY).filterNotNull().toTypedArray()
+            val z1 = zTo
+            val propZ = z1?.let { PropertyValuesHolder.ofFloat("translationZ", it) }
+            
+            val props = arrayOf(propX, propY, propZ).filterNotNull().toTypedArray()
 
             animate(pass).apply {
                 setValues(*props)
