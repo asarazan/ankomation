@@ -1,90 +1,52 @@
 package net.sarazan.ankomation
 
 import android.view.View
+import android.view.ViewPropertyAnimator
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 
 /**
  * Created by Aaron Sarazan on 9/17/16
  */
 
-fun ankomate(fn: AnkomationSet.() -> Unit) {
-    AnkomationSetImpl().apply(fn).apply {
-        prepare()
-        execute()
+abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
+
+    companion object {
+
+        val defaultDuration = 200L
+        val defaultInterpolator = AccelerateDecelerateInterpolator()
+
+        fun create(fn: AnkomationSet.() -> Unit) {
+            AnkomationSet(null).apply(fn).apply {
+                prepare()
+                start()
+            }
+        }
     }
+
+    var delay: Long? = null
+    val resolvedDelay: Long by lazy {
+        delay ?: parent?.delay ?: 0L
+    }
+
+    var duration: Long? = null
+    val resolvedDuration: Long by lazy {
+        duration ?: parent?.duration ?: Ankomation.defaultDuration
+    }
+
+    var interpolator: Interpolator? = null
+    val resolvedInterpolator: Interpolator by lazy {
+        interpolator ?: parent?.interpolator ?: Ankomation.defaultInterpolator
+    }
+
+    protected fun ankomate(): ViewPropertyAnimator {
+        return view!!.animate()
+                .setStartDelay(resolvedDelay)
+                .setDuration(resolvedDuration)
+                .setInterpolator(resolvedInterpolator)
+    }
+
+    open fun prepare() {}
+    abstract fun start()
 }
 
-interface Ankomation {
-    fun prepare() {}
-    fun execute() {}
-}
-
-interface ViewAnkomation : Ankomation {
-    val view: View
-}
-
-interface TimeAnkomation : Ankomation {
-    var duration: Long?
-    var interpolator: Interpolator?
-}
-
-interface AnkomationSet: TimeAnkomation {
-
-    fun View.scale(fn: Scale.() -> Unit)
-    fun View.alpha(fn: Alpha.() -> Unit)
-    fun View.rotate(fn: Rotate.() -> Unit)
-
-    infix fun then(fn: AnkomationSet.() -> Unit)
-
-    fun View.show()
-    fun View.hide()
-    fun View.disappear()
-
-}
-
-//fun test() {
-//    val view1: View? = null
-//    view1!!
-//    val view2: View? = null
-//    view2!!
-//
-//
-//    ankomate {
-//
-//        duration = 200L
-//        interpolator = AccelerateDecelerateInterpolator()
-//
-//        view1.scale {
-//            xFrom = 0.1f
-//            xTo = 1f
-//        }
-//
-//        view1.alpha {
-//            from = 0f
-//            to = 1f
-//        }
-//
-//        view2.rotate {
-//            from = 270
-//            to = 180
-//        }
-//
-//        then {
-//
-//            duration = 400L
-//            interpolator = AccelerateInterpolator()
-//
-//            view1.rotate {
-//                from = 180
-//                to = 360
-//            }
-//
-//            then {
-//
-//                view1.disappear()
-//
-//            }
-//
-//        }
-//    }
-//}
