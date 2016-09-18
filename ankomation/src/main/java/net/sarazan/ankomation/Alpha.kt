@@ -9,11 +9,8 @@ class Alpha : Ankomation {
     var from: Float? = null
     var to: Float? = null
 
-    override fun prepare() {
-        from?.let { view!!.alpha = it }
-    }
-
     override fun start() {
-        to?.let { ankomate().alpha(it).start() }
+        from?.let { view!!.alpha = it }
+        to?.let { animate().alpha(it).start() }
     }
 }

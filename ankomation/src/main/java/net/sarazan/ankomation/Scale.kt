@@ -11,18 +11,14 @@ class Scale : Ankomation {
     var yFrom: Float? = null
     var yTo: Float? = null
 
-    override fun prepare() {
-        view?.let {
-            view ->
-            xFrom?.let { view.scaleX = it }
-            yFrom?.let { view.scaleY = it }
-        }
-    }
-
     override fun start() {
         view?.let {
             view ->
-            ankomate().apply {
+
+            xFrom?.let { view.scaleX = it }
+            yFrom?.let { view.scaleY = it }
+
+            animate().apply {
                 xTo?.let { scaleX(it) }
                 yTo?.let { scaleY(it) }
             }

@@ -15,20 +15,16 @@ class Translate : Ankomation {
     var yTo: Float? = null
     var yToPercent: Float? = null
 
-    override fun prepare() {
+    override fun start() {
         view?.let {
             view ->
+
             xFrom?.let { view.x = it }
             xFromPercent?.let { view.x = it * view.measuredWidth }
             yFrom?.let { view.y = it }
             yFromPercent?.let { view.y = it * view.measuredHeight }
-        }
-    }
 
-    override fun start() {
-        view?.let {
-            view ->
-            ankomate().apply { 
+            animate().apply {
                 xTo?.let { translationX(it) }
                 xToPercent?.let { translationX(it * view.measuredWidth) }
                 yTo?.let { translationY(it) }

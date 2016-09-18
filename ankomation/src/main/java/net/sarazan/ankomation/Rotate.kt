@@ -9,13 +9,10 @@ class Rotate : Ankomation {
     var from: Float? = null
     var to: Float? = null
 
-    override fun prepare() {
-        from?.let { view!!.rotation = it }
-    }
-
     override fun start() {
+        from?.let { view!!.rotation = it }
         to?.let {
-            ankomate().apply { rotation(it) }
+            animate().apply { rotation(it) }
         }
     }
 }
