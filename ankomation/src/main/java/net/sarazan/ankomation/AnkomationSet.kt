@@ -1,6 +1,5 @@
 package net.sarazan.ankomation
 
-import android.util.Log
 import android.view.View
 import android.view.View.*
 
@@ -69,11 +68,7 @@ open class AnkomationSet : Ankomation {
             isComplete = true
             return true
         }
-
-        Log.d("Anim", "[$pass] Start ${javaClass.simpleName}")
-
         executePass(pass)
-
         return true
     }
 
@@ -91,19 +86,7 @@ open class AnkomationSet : Ankomation {
         }
     }
 
-    override fun onFinish(pass: Int) {
-        super.onFinish(pass)
-        Log.d("Anim", "[$pass] Finish ${javaClass.simpleName}")
-    }
-
-    private val set = mutableSetOf<Ankomation>()
     internal fun onChildComplete(child: Ankomation) {
-
-        if (child in set) {
-            Log.d("Hey", "Listen")
-        }
-        set.add(child)
-
         completeCount++
         completeThisPass++
 

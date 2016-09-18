@@ -2,6 +2,7 @@ package net.sarazan.ankomation.app
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import net.sarazan.ankomation.Ankomation
 
@@ -16,22 +17,23 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
 
         button.setOnClickListener {
-            run()
+            toggleFab()
         }
     }
 
-    private fun run() {
+    private fun toggleFab() {
+        val shouldShow = fab5.visibility != View.VISIBLE
         Ankomation.start {
-            fab5.visible()
+            if (shouldShow) {
+                fab5.visible()
+            }
+            fab5.alpha {
+                from = if (shouldShow) 0f else 1f
+                to = if (shouldShow) 1f else 0f
+            }
             then {
-                then {
-                    fab5.alpha {
-                        from = 0f
-                        to = 1f
-                    }
-                    then {
-                        fab5.gone()
-                    }
+                if (!shouldShow) {
+                    fab5.gone()
                 }
             }
         }
