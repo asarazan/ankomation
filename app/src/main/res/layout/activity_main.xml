@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin"
+    android:clipToPadding="false"
     tools:context=".MainActivity">
 
     <android.support.design.widget.FloatingActionButton
@@ -21,12 +22,15 @@
         android:layout_alignParentRight="true"
         app:fabSize="normal"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <View
         android:id="@+id/fab3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        app:fabSize="normal"/>
+        android:clickable="true"
+        android:background="?colorAccent"
+        android:foreground="?selectableItemBackground"
+        android:elevation="8dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab4"
@@ -42,13 +46,5 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         app:fabSize="normal"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:text="Start"/>
 
 </RelativeLayout>

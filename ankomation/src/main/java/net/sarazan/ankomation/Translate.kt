@@ -20,10 +20,10 @@ class Translate : Ankomation {
         view?.let {
             view ->
 
-            xFrom?.let { view.x = it }
-            xFromPercent?.let { view.x = it * view.measuredWidth }
-            yFrom?.let { view.y = it }
-            yFromPercent?.let { view.y = it * view.measuredHeight }
+            xFrom?.let { view.translationX = it }
+            xFromPercent?.let { view.translationX = it * view.measuredWidth }
+            yFrom?.let { view.translationY = it }
+            yFromPercent?.let { view.translationY = it * view.measuredHeight }
 
             animate(pass).apply {
                 xTo?.let { translationX(it) }

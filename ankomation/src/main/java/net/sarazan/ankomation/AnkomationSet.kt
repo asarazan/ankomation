@@ -38,6 +38,10 @@ open class AnkomationSet : Ankomation {
         add(Rotate(self, this).apply(fn))
     }
 
+    fun View.translate(fn: Translate.() -> Unit) {
+        add(Translate(self, this).apply(fn))
+    }
+
     fun View.visible() {
         add(Visibility(self, this, VISIBLE))
     }
