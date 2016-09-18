@@ -1,5 +1,6 @@
 package net.sarazan.ankomation
 
+import android.util.Log
 import android.view.View
 import android.view.View.*
 
@@ -38,15 +39,15 @@ open class AnkomationSet : Ankomation {
         add(Rotate(self, this).apply(fn))
     }
 
-    fun View.show() {
+    fun View.visible() {
         add(Visibility(self, this, VISIBLE))
     }
 
-    fun View.hide() {
+    fun View.invisible() {
         add(Visibility(self, this, INVISIBLE))
     }
 
-    fun View.disappear() {
+    fun View.gone() {
         add(Visibility(self, this, GONE))
     }
 
@@ -63,41 +64,57 @@ open class AnkomationSet : Ankomation {
     }
 
     override fun onStart(pass: Int): Boolean {
+        if (pass != 0) return false
         if (children.isEmpty()) {
             isComplete = true
             return true
         }
 
+        Log.d("Anim", "[$pass] Start ${javaClass.simpleName}")
+
+        executePass(pass)
+
+        return true
+    }
+
+    private fun executePass(pass: Int) {
         var count = 0
+        completeThisPass = 0
         children.forEach {
             if (it.start(pass)) {
                 count++
             }
         }
         runningCount = count
-        completeThisPass = 0
-
-        // Check for nonsensical situations like empty or nothing-but-then sets.
-        if (completeCount < children.size) {
-            if (runningCount == 0) {
-                return nextPass()
-            }
-        } else {
-            finish(pass)
-        }
-
-        return true
-    }
-
-    internal fun onChildComplete(child: Ankomation) {
-        if (completeCount++ == children.size) {
-            finish(pass)
-        } else if (completeThisPass++ == runningCount) {
+        if (completeCount < children.size && completeThisPass == runningCount) {
             nextPass()
         }
     }
 
-    private fun nextPass(): Boolean {
-        return start(++pass)
+    override fun onFinish(pass: Int) {
+        super.onFinish(pass)
+        Log.d("Anim", "[$pass] Finish ${javaClass.simpleName}")
+    }
+
+    private val set = mutableSetOf<Ankomation>()
+    internal fun onChildComplete(child: Ankomation) {
+
+        if (child in set) {
+            Log.d("Hey", "Listen")
+        }
+        set.add(child)
+
+        completeCount++
+        completeThisPass++
+
+        if (completeCount == children.size) {
+            finish(pass)
+        } else if (completeThisPass == runningCount) {
+            nextPass()
+        }
+    }
+
+    private fun nextPass() {
+        executePass(++pass)
     }
 }

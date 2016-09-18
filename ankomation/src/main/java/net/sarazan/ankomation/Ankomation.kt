@@ -17,16 +17,13 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         val defaultDuration = 200L
         val defaultInterpolator = AccelerateDecelerateInterpolator()
 
-        fun create(fn: AnkomationSet.() -> Unit) {
+        fun start(fn: AnkomationSet.() -> Unit) {
             AnkomationSet(null).apply {
                 this.fn()
                 this.start(0)
             }
         }
     }
-
-    var isRunning: Boolean = false
-        protected set
 
     var delay: Long? = null
     val resolvedDelay: Long by lazy {
@@ -60,13 +57,11 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
 
     abstract fun onStart(pass: Int): Boolean
     fun start(pass: Int): Boolean {
-        isRunning = onStart(pass)
-        return isRunning
+        return onStart(pass)
     }
 
     open fun onFinish(pass: Int) {}
     fun finish(pass: Int) {
-        isRunning = false
         onFinish(pass)
         parent?.onChildComplete(this)
     }

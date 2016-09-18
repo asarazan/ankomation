@@ -24,6 +24,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':ankomation')
+    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
 }
