@@ -45,26 +45,26 @@ class MainActivity : AppCompatActivity() {
         Ankomation.start {
 
             and {
-                fab.translate {
+                translate(fab) {
                     yTo = -translate
                 }
-                fab.rotate {
+                rotate(fab) {
                     to = -rotation
                 }
-                fab.scale {
+                scale(fab) {
                     xTo = 1 / scale
                     yTo = 1 / scale
                 }
             }
 
             then {
-                fab.translate {
+                translate(fab) {
                     xTo = translate
                 }
-                fab.rotate {
+                rotate(fab) {
                     to = rotation
                 }
-                fab.scale {
+                scale(fab) {
                     xTo = scale
                     yTo = scale
                 }
@@ -76,22 +76,22 @@ class MainActivity : AppCompatActivity() {
     private fun toggleFab(fab: View) {
         Ankomation.start {
 
-            fab.alpha {
+            alpha(fab) {
                 to = 0f
             }
 
-            fab.scale {
+            scale(fab) {
                 xTo = 0.2f
                 yTo = xTo
             }
 
             then {
 
-                fab.alpha {
+                alpha(fab) {
                     to = 1f
                 }
 
-                fab.scale {
+                scale(fab) {
                     xTo = 1f
                     yTo = xTo
                 }
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         val shouldShow = !fab.scaleX.isAbout(1f)
         Ankomation.start {
             interpolator = BounceInterpolator()
-            fab.scale {
+            scale(fab) {
                 xFrom = if (shouldShow) 0.2f else 1f
                 yFrom = xFrom
                 xTo = if (shouldShow) 1f else 0.2f
@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
     private fun translateFab(fab: View) {
         val shouldShow = fab.translationX != 0f
         Ankomation.start {
-            fab.translate {
+            translate(fab) {
                 xFromPercent = if (shouldShow) 1f else 0f
                 xToPercent = if (shouldShow) 0f else 1f
             }

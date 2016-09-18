@@ -1,7 +1,6 @@
 package net.sarazan.ankomation
 
 import android.view.View
-import android.view.View.*
 import net.sarazan.ankomation.properties.*
 
 /**
@@ -24,32 +23,32 @@ open class AnkomationSet : Ankomation {
         children.add(child)
     }
 
-    fun View.scale(fn: Scale.() -> Unit) {
-        add(Scale(self, this).apply(fn))
+    fun scale(v: View, fn: Scale.() -> Unit) {
+        add(Scale(self, v).apply(fn))
     }
 
-    fun View.alpha(fn: Alpha.() -> Unit) {
-        add(Alpha(self, this).apply(fn))
+    fun alpha(v: View, fn: Alpha.() -> Unit) {
+        add(Alpha(self, v).apply(fn))
     }
 
-    fun View.rotate(fn: Rotate.() -> Unit) {
-        add(Rotate(self, this).apply(fn))
+    fun rotate(v: View, fn: Rotate.() -> Unit) {
+        add(Rotate(self, v).apply(fn))
     }
 
-    fun View.translate(fn: Translate.() -> Unit) {
-        add(Translate(self, this).apply(fn))
+    fun translate(v: View, fn: Translate.() -> Unit) {
+        add(Translate(self, v).apply(fn))
     }
 
-    fun View.visible() {
-        add(Visibility(self, this, VISIBLE))
+    fun visible(v: View) {
+        add(Visibility(self, v, View.VISIBLE))
     }
 
-    fun View.invisible() {
-        add(Visibility(self, this, INVISIBLE))
+    fun invisible(v: View) {
+        add(Visibility(self, v, View.INVISIBLE))
     }
 
-    fun View.gone() {
-        add(Visibility(self, this, GONE))
+    fun gone(v: View) {
+        add(Visibility(self, v, View.GONE))
     }
 
     fun run(fn: () -> Unit) {
