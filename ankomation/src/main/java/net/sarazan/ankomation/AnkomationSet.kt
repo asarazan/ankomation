@@ -2,6 +2,7 @@ package net.sarazan.ankomation
 
 import android.view.View
 import android.view.View.*
+import net.sarazan.ankomation.properties.*
 
 /**
  * Created by Aaron Sarazan on 9/17/16
@@ -19,9 +20,6 @@ open class AnkomationSet : Ankomation {
 
     private val self = this // to make constructors easier
 
-    var isComplete: Boolean = false
-        private set
-    
     fun add(child: Ankomation) {
         children.add(child)
     }
@@ -69,7 +67,6 @@ open class AnkomationSet : Ankomation {
     override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
         if (children.isEmpty()) {
-            isComplete = true
             return true
         }
         executePass(pass)

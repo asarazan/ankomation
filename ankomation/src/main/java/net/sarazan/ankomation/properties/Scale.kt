@@ -1,6 +1,9 @@
-package net.sarazan.ankomation
+package net.sarazan.ankomation.properties
 
+import android.animation.PropertyValuesHolder
 import android.view.View
+import net.sarazan.ankomation.Ankomation
+import net.sarazan.ankomation.AnkomationSet
 
 class Scale : Ankomation {
 
@@ -19,9 +22,13 @@ class Scale : Ankomation {
             xFrom?.let { view.scaleX = it }
             yFrom?.let { view.scaleY = it }
 
+            val x = xTo?.let { PropertyValuesHolder.ofFloat("scaleX", it) }
+            val y = yTo?.let { PropertyValuesHolder.ofFloat("scaleY", it) }
+            val props = arrayOf(x, y).filterNotNull().toTypedArray()
+
             animate(pass).apply {
-                xTo?.let { scaleX(it) }
-                yTo?.let { scaleY(it) }
+                setValues(*props)
+                start()
             }
         }
         return true

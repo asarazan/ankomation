@@ -1,6 +1,9 @@
-package net.sarazan.ankomation
+package net.sarazan.ankomation.properties
 
+import android.animation.PropertyValuesHolder
 import android.view.View
+import net.sarazan.ankomation.Ankomation
+import net.sarazan.ankomation.AnkomationSet
 
 class Rotate : Ankomation {
 
@@ -13,7 +16,10 @@ class Rotate : Ankomation {
         if (pass != 0) return false
         from?.let { view!!.rotation = it }
         to?.let {
-            animate(pass).apply { rotation(it) }
+            animate(pass).apply {
+                setValues(PropertyValuesHolder.ofFloat("rotation", it))
+                start()
+            }
         }
         return true
     }

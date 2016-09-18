@@ -1,8 +1,9 @@
 package net.sarazan.ankomation
 
 import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.view.View
-import android.view.ViewPropertyAnimator
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 
@@ -25,6 +26,10 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         }
     }
 
+    val root: AnkomationSet? by lazy {
+        parent?.root
+    }
+
     var delay: Long? = null
     val resolvedDelay: Long by lazy {
         delay ?: parent?.delay ?: 0L
@@ -40,19 +45,20 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         interpolator ?: parent?.interpolator ?: Ankomation.defaultInterpolator
     }
 
-    protected fun animate(pass: Int): ViewPropertyAnimator {
-        return view!!.animate()
-                .setStartDelay(resolvedDelay)
-                .setDuration(resolvedDuration)
-                .setInterpolator(resolvedInterpolator)
-                .setListener(object : Animator.AnimatorListener {
-                    override fun onAnimationStart(animation: Animator) {}
-                    override fun onAnimationRepeat(animation: Animator) {}
-                    override fun onAnimationCancel(animation: Animator) {}
-                    override fun onAnimationEnd(animation: Animator) {
-                        finish(pass)
-                    }
-                })
+    protected fun animate(pass: Int): ValueAnimator {
+        return ObjectAnimator.ofPropertyValuesHolder(view!!).apply {
+            startDelay = resolvedDelay
+            duration = resolvedDuration
+            interpolator = resolvedInterpolator
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationStart(animation: Animator?) {}
+                override fun onAnimationRepeat(animation: Animator?) {}
+                override fun onAnimationCancel(animation: Animator?) {}
+                override fun onAnimationEnd(animation: Animator?) {
+                    finish(pass)
+                }
+            })
+        }
     }
 
     abstract fun onStart(pass: Int): Boolean
