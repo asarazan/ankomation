@@ -9,11 +9,11 @@ class Rotate : Ankomation {
     var from: Float? = null
     var to: Float? = null
 
-    override fun start(pass: Int): Boolean {
+    override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
         from?.let { view!!.rotation = it }
         to?.let {
-            animate().apply { rotation(it) }
+            animate(pass).apply { rotation(it) }
         }
         return true
     }

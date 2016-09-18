@@ -62,7 +62,7 @@ open class AnkomationSet : Ankomation {
         add(Then(self).apply(fn))
     }
 
-    override fun start(pass: Int): Boolean {
+    override fun onStart(pass: Int): Boolean {
         if (children.isEmpty()) {
             isComplete = true
             return true
@@ -77,16 +77,22 @@ open class AnkomationSet : Ankomation {
         runningCount = count
         completeThisPass = 0
 
-        if (runningCount == 0 && completeCount < children.size) {
-            return nextPass()
+        // Check for nonsensical situations like empty or nothing-but-then sets.
+        if (completeCount < children.size) {
+            if (runningCount == 0) {
+                return nextPass()
+            }
+        } else {
+            finish(pass)
         }
 
         return true
     }
 
     internal fun onChildComplete(child: Ankomation) {
-        completeCount++
-        if (completeThisPass++ == runningCount) {
+        if (completeCount++ == children.size) {
+            finish(pass)
+        } else if (completeThisPass++ == runningCount) {
             nextPass()
         }
     }

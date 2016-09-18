@@ -25,6 +25,9 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         }
     }
 
+    var isRunning: Boolean = false
+        protected set
+
     var delay: Long? = null
     val resolvedDelay: Long by lazy {
         delay ?: parent?.delay ?: 0L
@@ -40,7 +43,7 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         interpolator ?: parent?.interpolator ?: Ankomation.defaultInterpolator
     }
 
-    protected fun animate(): ViewPropertyAnimator {
+    protected fun animate(pass: Int): ViewPropertyAnimator {
         return view!!.animate()
                 .setStartDelay(resolvedDelay)
                 .setDuration(resolvedDuration)
@@ -50,11 +53,22 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
                     override fun onAnimationRepeat(animation: Animator) {}
                     override fun onAnimationCancel(animation: Animator) {}
                     override fun onAnimationEnd(animation: Animator) {
-                        parent?.onChildComplete(this@Ankomation)
+                        finish(pass)
                     }
                 })
     }
 
-    abstract fun start(pass: Int): Boolean
+    abstract fun onStart(pass: Int): Boolean
+    fun start(pass: Int): Boolean {
+        isRunning = onStart(pass)
+        return isRunning
+    }
+
+    open fun onFinish(pass: Int) {}
+    fun finish(pass: Int) {
+        isRunning = false
+        onFinish(pass)
+        parent?.onChildComplete(this)
+    }
 }
 

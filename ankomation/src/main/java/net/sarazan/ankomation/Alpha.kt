@@ -9,10 +9,10 @@ class Alpha : Ankomation {
     var from: Float? = null
     var to: Float? = null
 
-    override fun start(pass: Int): Boolean {
+    override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
         from?.let { view!!.alpha = it }
-        to?.let { animate().alpha(it).start() }
+        to?.let { animate(pass).alpha(it).start() }
         return true
     }
 }

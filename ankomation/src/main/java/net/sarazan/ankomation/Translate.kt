@@ -15,7 +15,7 @@ class Translate : Ankomation {
     var yTo: Float? = null
     var yToPercent: Float? = null
 
-    override fun start(pass: Int): Boolean {
+    override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
         view?.let {
             view ->
@@ -25,7 +25,7 @@ class Translate : Ankomation {
             yFrom?.let { view.y = it }
             yFromPercent?.let { view.y = it * view.measuredHeight }
 
-            animate().apply {
+            animate(pass).apply {
                 xTo?.let { translationX(it) }
                 xToPercent?.let { translationX(it * view.measuredWidth) }
                 yTo?.let { translationY(it) }

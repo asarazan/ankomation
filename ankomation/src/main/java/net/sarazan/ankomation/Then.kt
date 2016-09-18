@@ -6,7 +6,7 @@ package net.sarazan.ankomation
 class Then : AnkomationSet {
     constructor(parent: AnkomationSet) : super(parent)
 
-    override fun start(pass: Int): Boolean {
-        return pass == 1 && super.start(pass)
+    override fun onStart(pass: Int): Boolean {
+        return pass == 1 && super.onStart(pass)
     }
 }

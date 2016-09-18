@@ -11,7 +11,7 @@ class Scale : Ankomation {
     var yFrom: Float? = null
     var yTo: Float? = null
 
-    override fun start(pass: Int): Boolean {
+    override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
         view?.let {
             view ->
@@ -19,7 +19,7 @@ class Scale : Ankomation {
             xFrom?.let { view.scaleX = it }
             yFrom?.let { view.scaleY = it }
 
-            animate().apply {
+            animate(pass).apply {
                 xTo?.let { scaleX(it) }
                 yTo?.let { scaleY(it) }
             }

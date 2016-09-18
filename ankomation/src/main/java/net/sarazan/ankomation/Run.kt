@@ -5,9 +5,10 @@ package net.sarazan.ankomation
  */
 class Run(parent: AnkomationSet, val fn: () -> Unit) : Ankomation(parent, null) {
 
-    override fun start(pass: Int): Boolean {
+    override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
         fn()
+        finish(pass)
         return true
     }
 }
