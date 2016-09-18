@@ -26,6 +26,10 @@ class MainActivity : AppCompatActivity() {
         fab3.setOnClickListener {
             complexFab(it)
         }
+        fab4.setOnClickListener {
+            // TODO
+//            multipleViews()
+        }
         fab5.setOnClickListener {
             toggleFab(it)
         }
