@@ -20,7 +20,7 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         fun create(fn: AnkomationSet.() -> Unit) {
             AnkomationSet(null).apply {
                 this.fn()
-                this.start()
+                this.start(0)
             }
         }
     }
@@ -55,6 +55,6 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
                 })
     }
 
-    abstract fun start()
+    abstract fun start(pass: Int): Boolean
 }
 

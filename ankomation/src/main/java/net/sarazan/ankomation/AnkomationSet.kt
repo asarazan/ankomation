@@ -11,56 +11,87 @@ open class AnkomationSet : Ankomation {
     constructor(parent: AnkomationSet?) : super(parent)
 
     private val children = mutableListOf<Ankomation>()
+    private var pass = 0
+
+    private var runningCount = 0
+    private var completeCount = 0
+    private var completeThisPass = 0
+
     private val self = this // to make constructors easier
 
-    init {
-
-    }
+    var isComplete: Boolean = false
+        private set
     
     fun add(child: Ankomation) {
         children.add(child)
     }
 
     fun View.scale(fn: Scale.() -> Unit) {
-        children.add(Scale(self, this).apply(fn))
+        add(Scale(self, this).apply(fn))
     }
 
     fun View.alpha(fn: Alpha.() -> Unit) {
-        children.add(Alpha(self, this).apply(fn))
+        add(Alpha(self, this).apply(fn))
     }
 
     fun View.rotate(fn: Rotate.() -> Unit) {
-        children.add(Rotate(self, this).apply(fn))
+        add(Rotate(self, this).apply(fn))
     }
 
     fun View.show() {
-        children.add(Visibility(self, this, VISIBLE))
+        add(Visibility(self, this, VISIBLE))
     }
 
     fun View.hide() {
-        children.add(Visibility(self, this, INVISIBLE))
+        add(Visibility(self, this, INVISIBLE))
     }
 
     fun View.disappear() {
-        children.add(Visibility(self, this, GONE))
+        add(Visibility(self, this, GONE))
     }
 
-    fun set(fn: AnkomationSet.() -> Unit) {
-        children.add(AnkomationSet(self).apply(fn))
+    fun run(fn: () -> Unit) {
+        add(Run(self, fn))
+    }
+
+    fun and(fn: AnkomationSet.() -> Unit) {
+        add(AnkomationSet(self).apply(fn))
     }
 
     fun then(fn: AnkomationSet.() -> Unit) {
-        children.add(Then(self).apply(fn))
+        add(Then(self).apply(fn))
     }
 
-    override fun start() {
-        children.forEach { it.start() }
-    }
-
-    private var completeCount = 0
-    internal fun onChildComplete(child: Ankomation) {
-        if (completeCount++ == children.size) {
-            // TODO
+    override fun start(pass: Int): Boolean {
+        if (children.isEmpty()) {
+            isComplete = true
+            return true
         }
+
+        var count = 0
+        children.forEach {
+            if (it.start(pass)) {
+                count++
+            }
+        }
+        runningCount = count
+        completeThisPass = 0
+
+        if (runningCount == 0 && completeCount < children.size) {
+            return nextPass()
+        }
+
+        return true
+    }
+
+    internal fun onChildComplete(child: Ankomation) {
+        completeCount++
+        if (completeThisPass++ == runningCount) {
+            nextPass()
+        }
+    }
+
+    private fun nextPass(): Boolean {
+        return start(++pass)
     }
 }

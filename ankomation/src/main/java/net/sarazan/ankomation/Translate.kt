@@ -4,7 +4,7 @@ import android.view.View
 
 class Translate : Ankomation {
 
-    constructor(set: AnkomationSet, view: View) : super(set, view)
+    constructor(parent: AnkomationSet, view: View) : super(parent, view)
 
     var xFrom: Float? = null
     var xFromPercent: Float? = null
@@ -15,7 +15,8 @@ class Translate : Ankomation {
     var yTo: Float? = null
     var yToPercent: Float? = null
 
-    override fun start() {
+    override fun start(pass: Int): Boolean {
+        if (pass != 0) return false
         view?.let {
             view ->
 
@@ -31,5 +32,6 @@ class Translate : Ankomation {
                 yToPercent?.let { translationY(it * view.measuredHeight) }
             }
         }
+        return true
     }
 }

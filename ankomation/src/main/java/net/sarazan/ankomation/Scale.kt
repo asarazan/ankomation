@@ -4,14 +4,15 @@ import android.view.View
 
 class Scale : Ankomation {
 
-    constructor(set: AnkomationSet, view: View) : super(set, view)
+    constructor(parent: AnkomationSet, view: View) : super(parent, view)
 
     var xFrom: Float? = null
     var xTo: Float? = null
     var yFrom: Float? = null
     var yTo: Float? = null
 
-    override fun start() {
+    override fun start(pass: Int): Boolean {
+        if (pass != 0) return false
         view?.let {
             view ->
 
@@ -23,5 +24,6 @@ class Scale : Ankomation {
                 yTo?.let { scaleY(it) }
             }
         }
+        return true
     }
 }
