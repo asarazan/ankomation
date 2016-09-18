@@ -1,26 +1,29 @@
 # ankomation
-anko for anims
 
-Here's how I hope it looks eventually:
+### Usage
 ```kotlin
 ankomate {
 
   duration = 200L
   interpolator = AccelerateDecelerateInterpolator()
 
-  view1.scale {
+  scale(view1) {
     xFrom = 0.1f
     xTo = 1f
   }
 
-  view1.alpha {
+  alpha(view1) {
     from = 0f
     to = 1f
   }
 
-  view2.rotate {
+  rotate(view2) {
     from = 270
     to = 180
+  }
+  
+  translate(view3) {
+    toPercent = 1f
   }
 
   then {
@@ -28,13 +31,13 @@ ankomate {
     duration = 400L
     interpolator = AccelerateInterpolator()
 
-    view1.rotate {
+    rotate(view1) {
       from = 180
       to = 360
     }
 
     then {
-      view1.disappear()
+      gone(view1)
     }
   }
 }
