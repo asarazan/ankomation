@@ -1,6 +1,5 @@
 package net.sarazan.ankomation
 
-import android.os.Handler
 import android.view.View
 import net.sarazan.ankomation.properties.*
 
@@ -103,9 +102,6 @@ open class AnkomationSet : Ankomation {
     }
 
     private fun nextPass() {
-        // Hack to make sure onLayout can get called e.g. if something was View.GONE
-        Handler().post {
-            executePass(++pass)
-        }
+        executePass(++pass)
     }
 }
