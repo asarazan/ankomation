@@ -1,6 +1,7 @@
 package net.sarazan.ankomation.properties
 
 import android.animation.PropertyValuesHolder
+import android.os.Build
 import android.view.View
 import net.sarazan.ankomation.Ankomation
 import net.sarazan.ankomation.AnkomationSet
@@ -29,14 +30,14 @@ class Translate : Ankomation {
             xFromPercent?.let { view.translationX = it * view.measuredWidth }
             yFrom?.let { view.translationY = it }
             yFromPercent?.let { view.translationY = it * view.measuredHeight }
-            zFrom?.let { view.translationZ = it }
+            if(Build.VERSION.SDK_INT >= 21) { zFrom?.let { view.translationZ = it } }
             
             val x1 = xTo ?: (xToPercent?.times(view.measuredWidth))
             val propX = x1?.let { PropertyValuesHolder.ofFloat("translationX", it) }
             val y1 = yTo ?: (yToPercent?.times(view.measuredHeight))
             val propY = y1?.let { PropertyValuesHolder.ofFloat("translationY", it) }
             val z1 = zTo
-            val propZ = z1?.let { PropertyValuesHolder.ofFloat("translationZ", it) }
+            val propZ = if(Build.VERSION.SDK_INT >= 21) z1?.let { PropertyValuesHolder.ofFloat("translationZ", it) } else null
             
             val props = arrayOf(propX, propY, propZ).filterNotNull().toTypedArray()
 
