@@ -115,9 +115,9 @@ class MainActivity : AppCompatActivity() {
     private fun translateFab(fab: View) {
         val shouldShow = fab.translationX != 0f
         Ankomation.start {
-            translate(fab) {
-                xFromPercent = if (shouldShow) 1f else 0f
-                xToPercent = if (shouldShow) 0f else 1f
+            translateFraction(fab) {
+                xFrom = if (shouldShow) 1f else 0f
+                xTo = if (shouldShow) 0f else 1f
             }
         }
     }

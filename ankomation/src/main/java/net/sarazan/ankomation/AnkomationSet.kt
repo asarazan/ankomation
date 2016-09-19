@@ -1,5 +1,6 @@
 package net.sarazan.ankomation
 
+import android.os.Handler
 import android.view.View
 import net.sarazan.ankomation.properties.*
 
@@ -37,6 +38,10 @@ open class AnkomationSet : Ankomation {
 
     fun translate(v: View, fn: Translate.() -> Unit) {
         add(Translate(self, v).apply(fn))
+    }
+
+    fun translateFraction(v: View, fn: TranslateFraction.() -> Unit) {
+        add(TranslateFraction(self, v).apply(fn))
     }
 
     fun visible(v: View) {
@@ -98,6 +103,9 @@ open class AnkomationSet : Ankomation {
     }
 
     private fun nextPass() {
-        executePass(++pass)
+        // Hack to make sure onLayout can get called e.g. if something was View.GONE
+        Handler().post {
+            executePass(++pass)
+        }
     }
 }

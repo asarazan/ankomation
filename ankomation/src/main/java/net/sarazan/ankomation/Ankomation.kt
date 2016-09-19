@@ -46,7 +46,7 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
     }
 
     protected fun animate(pass: Int): ValueAnimator {
-        return ObjectAnimator.ofPropertyValuesHolder(view!!).apply {
+        return ObjectAnimator.ofPropertyValuesHolder(ViewWrapper(view!!)).apply {
             startDelay = resolvedDelay
             duration = resolvedDuration
             interpolator = resolvedInterpolator

@@ -23,7 +23,7 @@ ankomate {
   }
   
   translate(view3) {
-    toPercent = 1f
+    toPercent = 100f
   }
 
   then {
