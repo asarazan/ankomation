@@ -2,7 +2,7 @@
 
 ### Usage
 ```kotlin
-ankomate {
+ankomate(context) {
 
   duration = 200L
   interpolator = AccelerateDecelerateInterpolator()
@@ -22,8 +22,8 @@ ankomate {
     to = 180
   }
   
-  translate(view3) {
-    toPercent = 100f
+  translateFraction(view3) {
+    to = 1f
   }
 
   then {
