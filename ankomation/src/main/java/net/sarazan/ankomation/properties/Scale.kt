@@ -41,7 +41,8 @@ class Scale : Ankomation {
 
             animate(pass).apply {
                 setValues(*props)
-                start()
+                runAnimator(this)
+                end()
             }
         }
         return true

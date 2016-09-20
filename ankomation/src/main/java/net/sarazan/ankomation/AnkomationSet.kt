@@ -1,5 +1,7 @@
 package net.sarazan.ankomation
 
+import android.animation.Animator
+import android.content.Context
 import android.view.View
 import net.sarazan.ankomation.properties.*
 
@@ -8,7 +10,8 @@ import net.sarazan.ankomation.properties.*
  */
 open class AnkomationSet : Ankomation {
 
-    constructor(parent: AnkomationSet?) : super(parent)
+    val context: Context
+    val complete: Boolean get() = completeCount == children.size
 
     private val children = mutableListOf<Ankomation>()
     private var pass = 0
@@ -18,6 +21,10 @@ open class AnkomationSet : Ankomation {
     private var completeThisPass = 0
 
     private val self = this // to make constructors easier
+
+    constructor(context: Context, parent: AnkomationSet?) : super(parent) {
+        this.context = context
+    }
 
     fun add(child: Ankomation) {
         children.add(child)
@@ -60,7 +67,7 @@ open class AnkomationSet : Ankomation {
     }
 
     fun and(fn: AnkomationSet.() -> Unit) {
-        add(AnkomationSet(self).apply(fn))
+        add(AnkomationSet(context, self).apply(fn))
     }
 
     fun then(fn: AnkomationSet.() -> Unit) {
@@ -74,6 +81,24 @@ open class AnkomationSet : Ankomation {
         }
         executePass(pass)
         return true
+    }
+
+    private val animMap = mutableMapOf<Ankomation, Animator>()
+    internal fun runAnimator(child: Ankomation, animator: Animator) {
+        animMap[child] = animator
+        animator.start()
+    }
+
+    internal var ending = false
+    override fun onEnd() {
+        ending = true
+        animMap.values.forEach { if (it.isRunning) it.end() }
+        children.forEach { it.end() }
+        runningCount = 0
+        completeCount = children.size
+        completeThisPass = 0
+        animMap.clear()
+        ending = false
     }
 
     private fun executePass(pass: Int) {

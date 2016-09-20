@@ -41,7 +41,7 @@ class TranslateFraction : Ankomation {
 
             animate(pass).apply {
                 setValues(*props)
-                start()
+                runAnimator(this)
             }
         }
         return true

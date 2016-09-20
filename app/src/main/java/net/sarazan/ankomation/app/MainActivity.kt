@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val rotation = if (comeBack) 0f else 45f
         val translate = if (comeBack) 0f else 100f
 
-        Ankomation.start {
+        Ankomation.start(this) {
 
             and {
                 translate(fab) {
@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleFab(fab: View) {
-        Ankomation.start {
+        Ankomation.start(this) {
 
             alpha(fab) {
                 to = 0f
@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun scaleFab(fab: View) {
         val shouldShow = !fab.scaleX.isAbout(1f)
-        Ankomation.start {
+        Ankomation.start(this) {
             interpolator = BounceInterpolator()
             scale(fab) {
                 xFrom = if (shouldShow) 0.2f else 1f
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun translateFab(fab: View) {
         val shouldShow = fab.translationX != 0f
-        Ankomation.start {
+        Ankomation.start(this) {
             translateFraction(fab) {
                 xFrom = if (shouldShow) 1f else 0f
                 xTo = if (shouldShow) 0f else 1f

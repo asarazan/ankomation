@@ -3,6 +3,7 @@ package net.sarazan.ankomation
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
+import android.content.Context
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
@@ -18,8 +19,8 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         val defaultDuration = 200L
         val defaultInterpolator = AccelerateDecelerateInterpolator()
 
-        fun start(fn: AnkomationSet.() -> Unit) {
-            AnkomationSet(null).apply {
+        fun start(context: Context, fn: AnkomationSet.() -> Unit): AnkomationSet {
+            return AnkomationSet(context, null).apply {
                 this.fn()
                 this.start(0)
             }
@@ -68,8 +69,19 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
 
     open fun onFinish(pass: Int) {}
     fun finish(pass: Int) {
-        onFinish(pass)
-        parent?.onChildComplete(this)
+        if (!(parent?.ending ?: false)) {
+            onFinish(pass)
+            parent?.onChildComplete(this)
+        }
+    }
+
+    fun runAnimator(animator: Animator) {
+        parent!!.runAnimator(this, animator)
+    }
+
+    open fun onEnd() {}
+    fun end() {
+        onEnd()
     }
 }
 

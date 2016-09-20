@@ -4,7 +4,7 @@ package net.sarazan.ankomation
  * Created by Aaron Sarazan on 9/18/16
  */
 class Then : AnkomationSet {
-    constructor(parent: AnkomationSet) : super(parent)
+    constructor(parent: AnkomationSet) : super(parent.context, parent)
 
     override fun onStart(pass: Int): Boolean {
         return pass == 1 && super.onStart(0)

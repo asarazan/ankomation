@@ -27,7 +27,7 @@ class Rotate : Ankomation {
         to?.let {
             animate(pass).apply {
                 setValues(PropertyValuesHolder.ofFloat(PROP, it))
-                start()
+                runAnimator(this)
             }
         }
         return true

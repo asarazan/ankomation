@@ -49,7 +49,7 @@ class Translate : Ankomation {
 
             animate(pass).apply {
                 setValues(*props)
-                start()
+                runAnimator(this)
             }
         }
         return true
