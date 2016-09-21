@@ -65,7 +65,7 @@ open class AnkomationSet : Ankomation {
     fun run(fn: () -> Unit) {
         add(Run(self, fn))
     }
-
+    
     fun and(fn: AnkomationSet.() -> Unit) {
         add(AnkomationSet(context, self).apply(fn))
     }

@@ -20,9 +20,12 @@ abstract class Ankomation(val parent: AnkomationSet?, val view: View? = null)  {
         val defaultInterpolator = AccelerateDecelerateInterpolator()
 
         fun start(context: Context, fn: AnkomationSet.() -> Unit): AnkomationSet {
+            return Ankomation.create(context, fn).apply { start(0) }
+        }
+
+        fun create(context: Context, fn: AnkomationSet.() -> Unit): AnkomationSet {
             return AnkomationSet(context, null).apply {
                 this.fn()
-                this.start(0)
             }
         }
     }
