@@ -32,11 +32,10 @@ class Scale : Ankomation {
         view?.let {
             view ->
 
-            xFrom?.let { view.scaleX = it }
-            yFrom?.let { view.scaleY = it }
-
-            val x = xTo?.let { PropertyValuesHolder.ofFloat(PROP_X, it) }
-            val y = yTo?.let { PropertyValuesHolder.ofFloat(PROP_Y, it) }
+            val xArgs = listOf(xFrom, xTo ?: xFrom).filterNotNull().toFloatArray()
+            val x = if (xArgs.isNotEmpty()) PropertyValuesHolder.ofFloat(PROP_X, *xArgs) else null
+            val yArgs = listOf(yFrom, yTo ?: yFrom).filterNotNull().toFloatArray()
+            val y = if (yArgs.isNotEmpty()) PropertyValuesHolder.ofFloat(PROP_Y, *yArgs) else null
             val props = arrayOf(x, y).filterNotNull().toTypedArray()
 
             animate(pass).apply {

@@ -23,10 +23,13 @@ class Rotate : Ankomation {
 
     override fun onStart(pass: Int): Boolean {
         if (pass != 0) return false
-        from?.let { view!!.rotation = it }
-        to?.let {
+
+        val args = listOf(from, to ?: from).filterNotNull().toFloatArray()
+        val prop = if (args.isNotEmpty()) PropertyValuesHolder.ofFloat(PROP, *args) else null
+
+        prop?.let {
             animate(pass).apply {
-                setValues(PropertyValuesHolder.ofFloat(PROP, it))
+                setValues(prop`)
                 runAnimator(this)
             }
         }
