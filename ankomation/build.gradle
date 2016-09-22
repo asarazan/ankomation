@@ -1,9 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
-group = 'net.sarazan'
-version = '0.1-SNAPSHOT'
-
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
