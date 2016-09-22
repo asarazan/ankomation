@@ -29,7 +29,7 @@ class Rotate : Ankomation {
 
         prop?.let {
             animate(pass).apply {
-                setValues(prop`)
+                setValues(prop)
                 runAnimator(this)
             }
         }
