@@ -30,4 +30,5 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
-apply from: '../gradle/install.gradle'
+//apply from: '../gradle/install.gradle'
+apply from: 'https://raw.githubusercontent.com/Levelmoney/grublish/1.0/gradle/module.gradle'
