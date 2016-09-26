@@ -1,5 +1,17 @@
 # ankomation
 
+### Install
+```gradle
+// {module}/build.gradle
+
+repositories {
+  maven { url 'https://dl.bintray.com/asarazan/maven' }
+}
+dependencies {
+  compile 'net.sarazan:ankomation:0.1'
+}
+```
+
 ### Usage
 ```kotlin
 ankomate(context) {
