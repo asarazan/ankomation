@@ -28,4 +28,4 @@ dependencies {
 }
 
 //apply from: '../gradle/install.gradle'
-apply from: 'https://raw.githubusercontent.com/Levelmoney/grublish/1.0/gradle/module.gradle'
+apply from: 'https://raw.githubusercontent.com/Levelmoney/grublish/1.0.1/gradle/module.gradle'
