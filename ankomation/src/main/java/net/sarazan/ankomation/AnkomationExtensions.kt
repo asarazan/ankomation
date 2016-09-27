@@ -6,7 +6,7 @@ import android.view.View
  * Created by Aaron Sarazan on 9/27/16
  */
 
-fun AnkomationSet.visibleFade(v: View) {
+fun AnkomationSet.fadeVisible(v: View) {
     visible(v)
     alpha(v) {
         if (v.visibility != View.VISIBLE) {
@@ -16,7 +16,7 @@ fun AnkomationSet.visibleFade(v: View) {
     }
 }
 
-fun AnkomationSet.invisibleFade(v: View) {
+fun AnkomationSet.fadeInvisible(v: View) {
     and {
         alpha(v) {
             to = 0f
@@ -25,7 +25,7 @@ fun AnkomationSet.invisibleFade(v: View) {
     }
 }
 
-fun AnkomationSet.goneFade(v: View) {
+fun AnkomationSet.fadeGone(v: View) {
     and {
         alpha(v) {
             to = 0f

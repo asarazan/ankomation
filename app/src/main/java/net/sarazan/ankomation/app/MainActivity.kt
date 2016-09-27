@@ -6,8 +6,8 @@ import android.view.View
 import android.view.animation.BounceInterpolator
 import kotlinx.android.synthetic.main.activity_main.*
 import net.sarazan.ankomation.Ankomation
-import net.sarazan.ankomation.goneFade
-import net.sarazan.ankomation.visibleFade
+import net.sarazan.ankomation.fadeGone
+import net.sarazan.ankomation.fadeVisible
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,10 +38,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun fades(fab: View) {
         Ankomation.start(this) {
-            goneFade(fab)
+            fadeGone(fab)
             then {
                 delay = 500L
-                visibleFade(fab)
+                fadeVisible(fab)
             }
         }
     }
