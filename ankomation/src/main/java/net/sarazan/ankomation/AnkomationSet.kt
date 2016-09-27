@@ -3,6 +3,7 @@ package net.sarazan.ankomation
 import android.animation.Animator
 import android.content.Context
 import android.view.View
+import android.view.View.VISIBLE
 import net.sarazan.ankomation.properties.*
 
 /**
@@ -51,7 +52,7 @@ open class AnkomationSet : Ankomation {
     }
 
     fun visible(v: View) {
-        add(Visibility(self, v, View.VISIBLE))
+        add(Visibility(self, v, VISIBLE))
     }
 
     fun invisible(v: View) {
