@@ -6,6 +6,8 @@ import android.view.View
 import android.view.animation.BounceInterpolator
 import kotlinx.android.synthetic.main.activity_main.*
 import net.sarazan.ankomation.Ankomation
+import net.sarazan.ankomation.goneFade
+import net.sarazan.ankomation.visibleFade
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,11 +29,20 @@ class MainActivity : AppCompatActivity() {
             complexFab(it)
         }
         fab4.setOnClickListener {
-            // TODO
-//            multipleViews()
+            fades(it)
         }
         fab5.setOnClickListener {
             toggleFab(it)
+        }
+    }
+
+    private fun fades(fab: View) {
+        Ankomation.start(this) {
+            goneFade(fab)
+            then {
+                delay = 500L
+                visibleFade(fab)
+            }
         }
     }
 
