@@ -1,5 +1,7 @@
 # ankomation
 
+Simple animations in Kotlin
+
 ### Usage
 ```kotlin
 ankomate(context) {
