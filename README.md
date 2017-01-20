@@ -1,5 +1,3 @@
-# ankomation
-
 Simple animations in Kotlin
 
 ### Usage
